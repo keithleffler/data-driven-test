@@ -1,6 +1,7 @@
 describe('placeholder', () => {
-  it('example.com loads', () => {
+  it('the-internet landing page loads', () => {
     cy.visit('/');
-    cy.title().should('match', /Example Domain/);
+    cy.title().should('match', /The Internet/);
+    cy.contains('h1', 'Welcome to the-internet').should('be.visible');
   });
 });

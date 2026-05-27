@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test('placeholder: example.com loads', async ({ page }) => {
+test('placeholder: the-internet landing page loads', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle(/Example Domain/);
+  await expect(page).toHaveTitle(/The Internet/);
+  await expect(page.getByRole('heading', { name: 'Welcome to the-internet' })).toBeVisible();
 });
