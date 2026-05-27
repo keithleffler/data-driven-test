@@ -1,0 +1,23 @@
+{
+  "name": "data-driven-test",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test:playwright": "playwright test",
+    "test:cypress": "unset ELECTRON_RUN_AS_NODE && cypress run",
+    "cypress:open": "unset ELECTRON_RUN_AS_NODE && cypress open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.22.0",
+  "dependencies": {
+    "@playwright/test": "^1.60.0",
+    "cypress": "14.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.3"
+  }
+}
