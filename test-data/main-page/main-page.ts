@@ -1,4 +1,5 @@
 
+import {LinkNavigationStepDefinition} from "@lib/test-definitions/test-steps/link-navigation-step";
 const linkNavigationSteps: LinkNavigationStepDefinition[] = [
   // A/B Testing
   {
