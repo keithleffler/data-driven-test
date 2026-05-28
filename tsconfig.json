@@ -11,7 +11,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "types": ["node"],
-    "ignoreDeprecations": "6.0"
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@lib/*": ["src/lib/*"]
+    }
   },
-  "include": ["playwright/**/*.ts", "cypress/**/*.ts", "*.config.ts"]
+  "include": ["playwright/**/*.ts", "cypress/**/*.ts", "src/**/*.ts", "*.config.ts"]
 }
