@@ -1,9 +1,10 @@
-import { PlaywrightReturnType, FrameworkAdapter, TestActionFn } from "@lib/framework-adapter";
+import { PlaywrightReturnType, FrameworkAdapter } from "@lib/framework-adapter";
+import { TestAction } from "@lib/index";
 
 export class PlaywrightTestAction extends FrameworkAdapter {
-    executeActions = (actions: TestActionFn[], options?: any): PlaywrightReturnType  => {
-        return actions.reduce((prev, action) => {
-            return prev.then(() => action(options));
+    executeActions = (actions: TestAction[], options?: any): PlaywrightReturnType  => {
+        return actions.reduce<PlaywrightReturnType>((prev, action) => {
+            return prev.then(() => { action.actionFn(action.actionOptions ?? options); });
         }, Promise.resolve());
     }
     verifyLinkNavigation = (): PlaywrightReturnType => {
