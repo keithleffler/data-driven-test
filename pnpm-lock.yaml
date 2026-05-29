@@ -18,6 +18,9 @@ importers:
       '@types/node':
         specifier: ^25.9.1
         version: 25.9.1
+      cypress-plugin-steps:
+        specifier: ^1.2.1
+        version: 1.2.1(cypress@14.5.4)
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -191,6 +194,11 @@ packages:
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
+
+  cypress-plugin-steps@1.2.1:
+    resolution: {integrity: sha512-L2khZMhTMgbAMBQhh4x2SQweVlb8ugadVsQlunnwGVBN313YfhoxsvWaQjJjm/N+0z/oUSZoKD3yAYkcFKEw9A==}
+    peerDependencies:
+      cypress: '>=10'
 
   cypress@14.5.4:
     resolution: {integrity: sha512-0Dhm4qc9VatOcI1GiFGVt8osgpPdqJLHzRwcAB5MSD/CAAts3oybvPUPawHyvJZUd8osADqZe/xzMsZ8sDTjXw==}
@@ -877,6 +885,10 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  cypress-plugin-steps@1.2.1(cypress@14.5.4):
+    dependencies:
+      cypress: 14.5.4
 
   cypress@14.5.4:
     dependencies:
