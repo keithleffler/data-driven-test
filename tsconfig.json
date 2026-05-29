@@ -15,6 +15,7 @@
     "baseUrl": ".",
     "paths": {
       "@lib/*": ["src/lib/*"],
+      "@page-objects/*": ["src/page-objects/*"],
       "@test-data/*": ["test-definitions/*"]
     }
   },

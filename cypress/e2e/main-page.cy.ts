@@ -1,5 +1,5 @@
 import { getMainPageTests } from "@test-data/main-page/main-page";
-import { CypressTestAction } from "cypress/support/cypress-test-action";
+import { CypressTestAction } from "cypress/support/cypress-adapter";
 const actions = new CypressTestAction();
 
 describe("main page tests", () => {

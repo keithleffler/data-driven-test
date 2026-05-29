@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { getMainPageTests } from "@test-data/main-page/main-page";
-import { PlaywrightTestAction } from "playwright/utils/playwright-test-action";
+import { PlaywrightTestAction } from "playwright/utils/playwright-adapter";
 
 const actions = new PlaywrightTestAction();
 const mainPageTests = getMainPageTests(actions);

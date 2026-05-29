@@ -1,9 +1,9 @@
-import {  ActionReturnType, TestAction } from "@lib/test-actions/test-action";
+import {  ActionReturnType, FrameworkAdapter } from "@lib/framework-adapter";
 import { Page } from "@playwright/test";
 
 export interface TestStepOptions {
   description: string;
-  actions: TestAction;
+  frameworkAdapter: FrameworkAdapter;
 }
 
 export interface ExecuteOptions {
@@ -12,11 +12,11 @@ export interface ExecuteOptions {
 }
 export abstract class TestStep {
   description: string;
-  protected actions: TestAction;
+  protected frameworkAdapter: FrameworkAdapter;
   
-  constructor({ description, actions }: TestStepOptions) {
+  constructor({ description, frameworkAdapter }: TestStepOptions) {
     this.description = description;
-    this.actions = actions;
+    this.frameworkAdapter = frameworkAdapter;
   }
 
   abstract execute(options?: ExecuteOptions): ActionReturnType;

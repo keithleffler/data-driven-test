@@ -1,8 +1,7 @@
-import { TestAction } from "@lib/test-actions/test-action";
+import { FrameworkAdapter } from "@lib/framework-adapter";
 import { TestCase } from "@lib/test-case";
-import { LinkNavigationStep } from "@lib/test-actions/verify-link-navigation-action";
-
-const getTests: (actions: TestAction) => TestCase[] = (actions) => [
+import { MainPage } from "@page-objects/main-page.po";
+const getTests: (actions: FrameworkAdapter) => TestCase[] = (actions) => [
   // A/B Testing
   new TestCase("A/B Testing Link Navigation Test", [
     new LinkNavigationStep({
@@ -56,6 +55,7 @@ const getTests: (actions: TestAction) => TestCase[] = (actions) => [
   ]),
 ];
 
-export const getMainPageTests = (actions: TestAction): TestCase[] => {
-  return getTests(actions);
+export const getMainPageTests = (frameworkAdapter: FrameworkAdapter): TestCase[] => {
+  const po = new MainPage(frameworkAdapter);
+  return getTests(frameworkAdapter);
 };
