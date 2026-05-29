@@ -33,8 +33,9 @@ export class TestStep {
   }
 
   execute = (page?: Page) => {
-    return this.actions.reduce<Promise<any>>((prev, action) => {
-      return prev.then(() => action.actionFn(page ? {page, ...action.actionOptions} : action.actionOptions));
-    }, Promise.resolve());
+    return this.actions.reduce<any>((prev, action) => {
+      const options = page ? {page, ...action.actionOptions} : action.actionOptions;
+      return prev ? prev.then(() => action.actionFn(options)) : action.actionFn(options);
+    }, undefined);
   }
 }

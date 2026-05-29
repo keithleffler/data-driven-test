@@ -8,9 +8,9 @@ export type TestActionFn = (options?: any) => ActionReturnType;
 export abstract class FrameworkAdapter {
   
   abstract navigateToPage: TestActionFn;
-  // abstract verifyLinkNavigationWithUrl: TestActionFn;
-  // abstract verifyLinkText: TestActionFn;
-  // abstract verifyPageTitle: TestActionFn;
-  // abstract verifyText: TestActionFn;
+  abstract verifyLinkExists: TestActionFn;
+  abstract verifyLinkHref: TestActionFn;
+  abstract clickLink: TestActionFn;
+  abstract verifyUrl: TestActionFn;
   abstract executeActions: TestActionFn;
 }
