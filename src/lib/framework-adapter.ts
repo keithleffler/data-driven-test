@@ -1,14 +1,14 @@
-import { ExecuteOptions } from "./test-step";
-
 export type CypressReturnType = Cypress.Chainable<any>;
 export type PlaywrightReturnType = Promise<void>;
+
 export type ActionReturnType = CypressReturnType | PlaywrightReturnType;
-export type TestActionFn = (options?: ExecuteOptions) => ActionReturnType;
+export type TestActionFn = (options?: any) => ActionReturnType;
 
 export abstract class FrameworkAdapter {
-  abstract navigateToPage(url: string): ActionReturnType;
+  abstract navigateToPage: TestActionFn;
+  abstract verifyLinkNavigationWithUrl: TestActionFn;
   abstract verifyLinkText: TestActionFn;
-  abstract verifyLinkNavigationWithUrl: (linkText: string, expectedUrl: string) => ActionReturnType;
   abstract verifyPageTitle: TestActionFn;
   abstract verifyText: TestActionFn;
+  abstract executeActions: TestActionFn;
 }

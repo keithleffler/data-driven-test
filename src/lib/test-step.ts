@@ -1,23 +1,37 @@
-import {  ActionReturnType, FrameworkAdapter } from "@lib/framework-adapter";
 import { Page } from "@playwright/test";
+import { TestActionFn } from "@lib/framework-adapter";
 
+
+export type TestAction = {
+  actionFn: TestActionFn;
+  actionOptions?: ActionOptions;
+}
 export interface TestStepOptions {
   description: string;
-  frameworkAdapter: FrameworkAdapter;
+  actions: TestAction[];
 }
 
-export interface ExecuteOptions {
+export interface ActionOptions {
   // Define any options needed for execution
+  linkText?: string;
+  expectedUrl?: string;
   page?: Page
 }
-export abstract class TestStep {
+
+export interface Action {
+  actionFn: TestActionFn;
+  actionOptions?: ActionOptions;
+}
+export class TestStep {
   description: string;
-  protected frameworkAdapter: FrameworkAdapter;
-  
-  constructor({ description, frameworkAdapter }: TestStepOptions) {
+  protected actions: Action[];
+
+  constructor({ description, actions }: TestStepOptions) {
     this.description = description;
-    this.frameworkAdapter = frameworkAdapter;
+    this.actions = actions;
   }
 
-  abstract execute(options?: ExecuteOptions): ActionReturnType;
+  execute = () => {
+  }
+
 }

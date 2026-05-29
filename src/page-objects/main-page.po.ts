@@ -1,20 +1,24 @@
 import { FrameworkAdapter } from "@lib/framework-adapter";
+import {TestAction} from "@lib/index";
+export class MainPagePO   {
+    adapter: FrameworkAdapter;
+    constructor(adapter: FrameworkAdapter) {
+        this.adapter = adapter;
+    }
+    navigateToPage = (url: string) => {
+        return this.adapter.navigateToPage(url);
+    }
+    verifyLinkNavigationWithUrl = (options?: any) => {
+        return this.adapter.verifyLinkNavigationWithUrl(options);
+    }
 
-export class MainPage {
-    constructor(protected adapter: FrameworkAdapter) {}
-    navigateToPage(): void {
-        this.adapter.navigateToPage("/");
+    verifyLinkText = (options?: any) => {
+        return this.adapter.verifyLinkText(options);
     }
-    verifyPageTitle(): void {
-        cy.title().should("include", "The Internet");
-        this.adapter.verifyPageTitle();
+    verifyPageTitle = (options?: any) => {
+        return this.adapter.verifyPageTitle(options);
     }
-    verifyLinkText(linkText: string): void {
-        cy.contains("a", linkText).should("be.visible");
-        this.adapter.verifyLinkText();
-    }
-    verifyLinkNavigation(linkText: string, expectedUrl: string): void {
-        cy.contains("a", linkText).should("have.attr", "href").and("include", expectedUrl);
-        this.adapter.verifyLinkNavigationWithUrl(linkText, expectedUrl);
+    verifyText = (options?: any) => {
+        return this.adapter.verifyText(options);
     }
 }
