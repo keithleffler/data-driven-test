@@ -21,7 +21,7 @@ export class PlaywrightTestAction extends FrameworkAdapter {
     verifyPageTitle = (): PlaywrightReturnType => {
         return Promise.resolve();
     } 
-    verifyLinkNavigationWithUrl = (linkText: string, expectedUrl: string): PlaywrightReturnType => {
+    verifyLinkNavigationWithUrl = (options?: any): PlaywrightReturnType => {
         return Promise.resolve();
     }
 }

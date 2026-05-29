@@ -32,6 +32,8 @@ export class TestStep {
   }
 
   execute = () => {
+    this.actions.forEach(action => {
+      action.actionFn(action.actionOptions);
+    });
   }
-
 }

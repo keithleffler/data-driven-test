@@ -1,22 +1,20 @@
 import { FrameworkAdapter,  CypressReturnType } from "@lib/framework-adapter";
 import { TestAction } from "@lib/index";
 
-export class CypressAdapter extends FrameworkAdapter {
+export class CypressTestAction extends FrameworkAdapter {
     executeActions=(actions: TestAction[], options?: any): CypressReturnType => {
-        return actions.reduce((prev, action) => {
-            return prev.then(() => action(options));
+        return actions.reduce<CypressReturnType>((prev, action) => {
+            return prev.then(() => action.actionFn(action.actionOptions ?? options));
         }, cy.wrap(null));
     }
 
     navigateToPage=(url: string): CypressReturnType => {    
         return cy.visit(url);
     }
-    verifyLinkText = (options?: any): CypressReturnType {
-        // Implement any additional logic if needed
+    verifyLinkText = (options?: any): CypressReturnType => {
         return cy.wrap(null);
     }
-    verifyLinkNavigationWithUrl (linkText: string, expectedUrl: string): CypressReturnType  {
-        // Implement any additional logic if needed
+    verifyLinkNavigationWithUrl = (options?: any): CypressReturnType => {
         return cy.wrap(null);
     }
     verifyPageTitle = (options?: any): CypressReturnType => {

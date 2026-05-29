@@ -20,7 +20,7 @@ test.describe("main page tests", () => {
         // step --------------------------------
         await test.step(step.description, async () => {
           await expect(page).toHaveTitle(/The Internet/);
-          await (step.execute() as Promise<void>);
+          await step.execute() ;
         });
         // end step -----------------------------
       }
