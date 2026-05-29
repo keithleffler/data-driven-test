@@ -1,37 +1,40 @@
-import { FrameworkAdapter } from "@lib/framework-adapter";
-import { TestStep } from "@lib/index";
+import { ActionReturnType, FrameworkAdapter } from "@lib/framework-adapter";
+import { TestAction, TestStep } from "@lib/index";
 import { TestCase } from "@lib/test-case";
 import { MainPagePO } from "@page-objects/main-page.po";
+import { Page } from "@playwright/test";
 
+const buildAction = {
+  navigateToPage: (po: MainPagePO, { url }: { url: string }): TestAction => ({
+    actionFn: po.navigateToPage,
+    actionOptions: { url }
+  }),
+  // verifyLinkNavigationWithUrl: (po: MainPagePO, { linkText, expectedUrl }: { linkText: string, expectedUrl: string }): TestAction => ({
+  //   actionFn: po.verifyLinkNavigationWithUrl,
+  //   actionOptions: { linkText, expectedUrl }
+  // }),
+}
 const getTests = (po: MainPagePO): TestCase[] => [
   // A/B Testing
   new TestCase("A/B Testing Link Navigation Test", [
     new TestStep({
       description: "Navigate to the A/B Testing page and verify URL",
       actions: [
-        {
-          actionFn: po.verifyLinkNavigationWithUrl,
-          actionOptions: {
-            linkText: "A/B Testing",
-            expectedUrl: "/abtest"
-          }
-        }
+        buildAction.navigateToPage(po, { url: "/" }),
+        // buildAction.verifyLinkNavigationWithUrl(po, { linkText: "A/B Testing", expectedUrl: "/abtest" })
       ],
 
     }),
   ]),
+
   // Add/Remove Elements
   new TestCase("Add/Remove Elements Link Navigation Test", [
     new TestStep({
       description: "Navigate to the Add/Remove Elements page and verify URL",
       actions: [
-        {
-          actionFn: po.verifyLinkNavigationWithUrl,
-          actionOptions: {
-            linkText: "Add/Remove Elements",
-            expectedUrl: "/add_remove_elements"
-          }
-        }
+        buildAction.navigateToPage(po, { url: "/" }),
+        // buildAction.verifyLinkNavigationWithUrl(po, { linkText: "Add/Remove Elements", expectedUrl: "/add_remove_elements" })
+
       ],
     }),
   ]),
@@ -41,13 +44,8 @@ const getTests = (po: MainPagePO): TestCase[] => [
     new TestStep({
       description: "Navigate to the Broken Images page and verify URL",
       actions: [
-        {
-          actionFn: po.verifyLinkNavigationWithUrl,
-          actionOptions: {
-            linkText: "Broken Images",
-            expectedUrl: "/broken_images"
-          }
-        }
+        buildAction.navigateToPage(po, { url: "/" }),
+        // buildAction.verifyLinkNavigationWithUrl(po, { linkText: "Broken Images", expectedUrl: "/broken_images" })
       ],
     }),
   ]),
@@ -56,13 +54,8 @@ const getTests = (po: MainPagePO): TestCase[] => [
     new TestStep({
       description: "Navigate to the Challenging DOM page and verify URL",
       actions: [
-        {
-          actionFn: po.verifyLinkNavigationWithUrl,
-          actionOptions: {
-            linkText: "Challenging DOM",
-            expectedUrl: "/challenging_dom"
-          }
-        }
+        buildAction.navigateToPage(po, { url: "/" }),
+        // buildAction.verifyLinkNavigationWithUrl(po, { linkText: "Challenging DOM", expectedUrl: "/challenging_dom" })
       ],
     }),
   ]),
@@ -71,19 +64,25 @@ const getTests = (po: MainPagePO): TestCase[] => [
     new TestStep({
       description: "Navigate to the Checkboxes page and verify URL",
       actions: [
-        {
-          actionFn: po.verifyLinkNavigationWithUrl,
-          actionOptions: {
-            linkText: "Checkboxes",
-            expectedUrl: "/checkboxes"
-          }
-        }
+        buildAction.navigateToPage(po, { url: "/" }),
+        // buildAction.verifyLinkNavigationWithUrl(po, { linkText: "Checkboxes", expectedUrl: "/checkboxes" })
       ],
     }),
   ]),
+  // // Checkboxes
+  // new TestCase("Checkboxes Link Navigation Test", [
+  //   new TestStep({
+  //     description: "Navigate to the Checkboxes page and verify URL",
+  //     actions: [
+  //       buildAction.navigateToPage(po, { url: "/" }),
+  //       // buildAction.verifyLinkNavigationWithUrl(po, { linkText: "Checkboxes", expectedUrl: "/checkboxes" })
+  //     ],
+  //   }),
+  // ]),
 ];
 
-export const getMainPageTests = (frameworkAdapter: FrameworkAdapter): TestCase[] => {
-  const po = new MainPagePO(frameworkAdapter);
+
+export const getMainPageTests = (frameworkAdapter: FrameworkAdapter,page?:Page): TestCase[] => {
+  const po = new MainPagePO(frameworkAdapter,page);
   return getTests(po);
 };

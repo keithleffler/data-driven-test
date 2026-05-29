@@ -16,6 +16,7 @@ export interface ActionOptions {
   linkText?: string;
   expectedUrl?: string;
   page?: Page
+  url?: string;
 }
 
 export interface Action {
@@ -31,9 +32,9 @@ export class TestStep {
     this.actions = actions;
   }
 
-  execute = () => {
-    this.actions.forEach(action => {
-      action.actionFn(action.actionOptions);
-    });
+  execute = (page?: Page) => {
+    return this.actions.reduce<Promise<any>>((prev, action) => {
+      return prev.then(() => action.actionFn(page ? {page, ...action.actionOptions} : action.actionOptions));
+    }, Promise.resolve());
   }
 }

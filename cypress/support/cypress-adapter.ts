@@ -8,21 +8,21 @@ export class CypressTestAction extends FrameworkAdapter {
         }, cy.wrap(null));
     }
 
-    navigateToPage=(url: string): CypressReturnType => {    
+    navigateToPage=({url}: {url: string}): CypressReturnType => {    
         return cy.visit(url);
     }
-    verifyLinkText = (options?: any): CypressReturnType => {
-        return cy.wrap(null);
-    }
-    verifyLinkNavigationWithUrl = (options?: any): CypressReturnType => {
-        return cy.wrap(null);
-    }
-    verifyPageTitle = (options?: any): CypressReturnType => {
-        // Implement any additional logic if needed
-        return cy.wrap(null);
-    }
-    verifyText = (options?: any): CypressReturnType => {
-        // Implement any additional logic if needed
-        return cy.wrap(null);
-    }   
+    // verifyLinkText = (options?: any): CypressReturnType => {
+    //     return cy.wrap(null);
+    // }
+    // verifyLinkNavigationWithUrl = (options?: any): CypressReturnType => {
+    //     return cy.wrap(null);
+    // }
+    // verifyPageTitle = (options?: any): CypressReturnType => {
+    //     // Implement any additional logic if needed
+    //     return cy.wrap(null);
+    // }
+    // verifyText = (options?: any): CypressReturnType => {
+    //     // Implement any additional logic if needed
+    //     return cy.wrap(null);
+    // }   
 }   
