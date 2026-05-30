@@ -44,6 +44,44 @@ The codebase is organized into four layers. Each layer has a single responsibili
 
 The test definitions themselves contain no framework code — swapping Cypress for Playwright is just a matter of which spec file runs.
 
+## Where test data lives
+
+The "data" in *data-driven testing* can live in several places, and the right answer depends on **who owns the data and how it gets edited**. This project currently keeps everything inline in TypeScript, but the design anticipates moving some data sets out as the project grows.
+
+### Current state — inline TypeScript
+
+Test data today is an inline `const` array in [test-definitions/main-page/main-page.ts](test-definitions/main-page/main-page.ts):
+
+```ts
+const linkNavData: LinkNavRow[] = [
+  { linkText: "A/B Testing",         expectedUrl: "/abtest" },
+  { linkText: "Add/Remove Elements", expectedUrl: "/add_remove_elements/" },
+  // ...
+];
+```
+
+A single factory function turns each row into a `TestCase`. Adding a sixth link is a one-line change.
+
+Inline storage wins here because the data set is small, dev-owned, lives under source control alongside the page it describes, and gets full TypeScript type checking — a typo in a field name is a compile error.
+
+### When to externalize
+
+Two signals would push a data set out of TypeScript and into a separate file:
+
+1. **A different audience needs to edit it.** If a QA engineer or SME should be able to add a row without touching `.ts` code, the data needs a format they already use. For tabular data that usually means CSV (opens in any spreadsheet).
+2. **A test management system is in the loop.** If test cases are authored in TestRail / Xray / Zephyr and exported, or if results need to round-trip back, CSV is typically the lingua franca — most TMS tools import and export it natively. In that scenario, CSV is the right call even for small, dev-owned data sets, because the import/export plumbing already exists.
+
+The motivating use case for this project (a user × product × state input matrix) clearly belongs in CSV: it's large, the matrix owners aren't necessarily TypeScript developers, and it's the kind of data a TMS would care about. The link-navigation data on the home page does not: it's small, it changes when the page changes (which is also a code change), and only developers will ever edit it.
+
+### A note on test management integration
+
+This project doesn't currently integrate with a TMS, and the test cases don't carry external test IDs. If/when a TMS is introduced, two concerns would shape the design:
+
+- **Stable test IDs** would need to live on each data row (e.g., a `testId: "TC-1234"` field) and flow through to the runner's output (typically JUnit XML, which both Playwright and Cypress can emit).
+- **Direction of authority** — whether test cases are authored in code and reported to the TMS, or authored in the TMS and consumed by the runner — drives whether data stays inline or moves to CSV. The latter requires CSV.
+
+These are decisions worth making before adopting a TMS, not after, since they're hard to retrofit.
+
 ## Repository layout
 
 ```text
