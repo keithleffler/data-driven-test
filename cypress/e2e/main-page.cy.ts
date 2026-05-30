@@ -1,4 +1,4 @@
-import { getMainPageTests } from "@test-data/main-page/main-page";
+import { getMainPageTests } from "@test-data/main-page";
 import { CypressTestAction } from "cypress/support/cypress-adapter";
 const actions = new CypressTestAction();
 
