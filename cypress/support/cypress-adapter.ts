@@ -8,6 +8,7 @@ export class CypressTestAction extends FrameworkAdapter {
         }, cy.wrap(null));
     }
 
+    // Internal helper, not part of the FrameworkAdapter contract — see playwright-adapter for why.
     getLinkByText = ({ linkText }: { linkText: string }): CypressReturnType => {
         return cy.contains("a", linkText);
     }
@@ -16,6 +17,8 @@ export class CypressTestAction extends FrameworkAdapter {
         return cy.visit(url);
     }
 
+    // Uses .filter rather than cy.contains because cy.contains yields only the first match,
+    // making any length assertion on its result trivially true.
     verifyLinkExists = ({ linkText }: { linkText: string }): CypressReturnType => {
         return cy.get("a").filter(`:contains("${linkText}")`).should("have.length", 1);
     }

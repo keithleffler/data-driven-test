@@ -10,6 +10,8 @@ export class PlaywrightTestAction extends FrameworkAdapter {
         }, Promise.resolve());
     }
 
+    // Internal helper, not part of the FrameworkAdapter contract — Locator vs Cypress.Chainable
+    // return types would leak framework specifics into the abstract base.
     getLinkByText = ({ linkText, page }: { linkText: string; page: Page }): Locator => {
         return page.getByRole("link", { name: linkText, exact: true });
     }

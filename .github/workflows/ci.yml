@@ -24,7 +24,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm exec playwright install --with-deps
 
       - run: pnpm test:playwright
 
@@ -36,8 +36,12 @@ jobs:
           retention-days: 7
 
   cypress:
-    name: Cypress
+    name: Cypress (${{ matrix.browser }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
     steps:
       - uses: actions/checkout@v4
 
@@ -52,12 +56,15 @@ jobs:
 
       - run: pnpm exec cypress install
 
-      - run: pnpm test:cypress
+      - uses: cypress-io/github-action@v6
+        with:
+          install: false
+          browser: ${{ matrix.browser }}
 
       - if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-artifacts
+          name: cypress-artifacts-${{ matrix.browser }}
           path: |
             cypress/screenshots/
             cypress/videos/
