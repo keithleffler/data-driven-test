@@ -10,8 +10,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["node"],
-    "ignoreDeprecations": "6.0"
+    "types": ["node","cypress-plugin-steps"],
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@lib/*": ["src/lib/*"],
+      "@page-objects/*": ["src/page-object-builder/*"],
+      "@test-data/*": ["test-definitions/*"]
+    }
   },
-  "include": ["playwright/**/*.ts", "cypress/**/*.ts", "*.config.ts"]
+  "include": ["playwright/**/*.ts", "cypress/**/*.ts", "src/**/*.ts", "test-definitions/**/*.ts", "*.config.ts"]
 }
