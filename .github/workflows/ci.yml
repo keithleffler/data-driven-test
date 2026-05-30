@@ -54,6 +54,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - run: pnpm exec cypress install
+
       - uses: cypress-io/github-action@v6
         with:
           install: false
