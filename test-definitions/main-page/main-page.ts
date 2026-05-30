@@ -1,5 +1,4 @@
 import { FrameworkAdapter } from "@lib/framework-adapter";
-import { TestStep } from "@lib/index";
 import { TestCase } from "@lib/test-case";
 import { MainPagePO } from "@page-objects/main-page.po";
 
@@ -13,26 +12,11 @@ const linkNavData: LinkNavRow[] = [
   { linkText: "Checkboxes",          expectedUrl: "/checkboxes" },
 ];
 
-const buildLinkNavTestCase = (po: MainPagePO, { linkText, expectedUrl }: LinkNavRow): TestCase =>
-  new TestCase(`${linkText} Link Navigation Test`, [
-    new TestStep({
-      description: "Navigate to home page",
-      actions: [po.navigateToPage({ url: "/" })],
-    }),
-    new TestStep({
-      description: `Verify ${linkText} link`,
-      actions: [
-        po.verifyLinkExists({ linkText }),
-        po.verifyLinkHref({ linkText, expectedUrl }),
-      ],
-    }),
-    new TestStep({
-      description: `Click ${linkText} link and verify navigation`,
-      actions: [
-        po.clickLink({ linkText }),
-        po.verifyUrl({ expectedUrl }),
-      ],
-    }),
+const buildLinkNavTestCase = (po: MainPagePO, row: LinkNavRow): TestCase =>
+  new TestCase(`${row.linkText} Link Navigation Test`, [
+    po.navigateToPageStep({ url: "/" }),
+    po.verifyLinkStep(row),
+    po.verifyLinkNavigationStep(row),
   ]);
 
 const getTests = (po: MainPagePO): TestCase[] =>

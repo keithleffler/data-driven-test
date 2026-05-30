@@ -22,7 +22,7 @@ The codebase is organized into four layers. Each layer has a single responsibili
 ├──────────────────────────────────────────────────────┤
 │  Test definitions (test-definitions/)                │  data: TestCases composed of TestSteps
 ├──────────────────────────────────────────────────────┤
-│  Page objects (src/page-object-builder/)             │  page-specific action factories
+│  Page objects (src/page-object-builder/)             │  page-specific step factories
 ├──────────────────────────────────────────────────────┤
 │  Framework adapter (src/lib/framework-adapter.ts)    │  low-level Playwright/Cypress primitives
 └──────────────────────────────────────────────────────┘
@@ -34,13 +34,13 @@ The codebase is organized into four layers. Each layer has a single responsibili
 - **`TestStep`** ([src/lib/test-step.ts](src/lib/test-step.ts)) — a labeled sequence of `TestAction`s. Its `execute()` chains the actions and returns a single promise the spec can await.
 - **`TestAction`** ([src/lib/test-step.ts](src/lib/test-step.ts)) — a pairing of an `actionFn` (from the adapter) and the `actionOptions` to call it with.
 - **`FrameworkAdapter`** ([src/lib/framework-adapter.ts](src/lib/framework-adapter.ts)) — abstract class declaring the low-level operations. Concrete implementations: [`PlaywrightTestAction`](playwright/utils/playwright-adapter.ts) and [`CypressTestAction`](cypress/support/cypress-adapter.ts).
-- **Page Objects** (e.g. [`MainPagePO`](src/page-object-builder/main-page.po.ts)) — own page-specific knowledge (locators, what "navigate to the A/B Testing page" means). Each method is a factory that binds an adapter call to page-specific arguments and returns a `TestAction`.
+- **Page Objects** (e.g. [`MainPagePO`](src/page-object-builder/main-page.po.ts)) — own page-specific knowledge: locators, step composition, and step wording. Public methods return `TestStep`s (e.g. `verifyLinkStep`, `verifyLinkNavigationStep`), describing *what* the test verifies. Protected action methods underneath each step return `TestAction`s and bind adapter calls to page-specific arguments — these are not exposed to test definitions, so tests compose at the step level and the PO owns the question of "what actions make up verifying a link."
 
 ### How a test flows
 
 1. A spec file ([playwright/tests/main-page.spec.ts](playwright/tests/main-page.spec.ts) or [cypress/e2e/main-page.cy.ts](cypress/e2e/main-page.cy.ts)) instantiates the framework adapter and calls `getMainPageTests(adapter)`.
 2. `getMainPageTests` ([test-definitions/main-page/main-page.ts](test-definitions/main-page/main-page.ts)) builds a `MainPagePO` against that adapter and produces an array of `TestCase`s.
-3. The spec iterates the cases, calling `step.execute(page)` for each step. The PO methods return `TestAction`s, the step chains them, and the underlying adapter calls drive the real framework.
+3. The spec iterates the cases, calling `step.execute(page)` for each step. Each step contains a sequence of `TestAction`s composed by the PO; `execute` chains them and the underlying adapter calls drive the real framework.
 
 The test definitions themselves contain no framework code — swapping Cypress for Playwright is just a matter of which spec file runs.
 
@@ -87,7 +87,7 @@ These are decisions worth making before adopting a TMS, not after, since they're
 ```text
 src/
   lib/                       # framework-agnostic core (TestCase, TestStep, FrameworkAdapter)
-  page-object-builder/       # page objects — action factories per page
+  page-object-builder/       # page objects — step factories per page
 test-definitions/            # data-only test cases, grouped by page
 playwright/
   tests/                     # Playwright specs
