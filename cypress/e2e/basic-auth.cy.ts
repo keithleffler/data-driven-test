@@ -14,11 +14,13 @@ describe("basic auth: credentialed access", () => {
     }
 
     it(testCase.description, () => {
-      // failOnStatusCode: false because the failure cases expect a 401 response.
-      cy.visit("/basic_auth", {
-        auth: { username: row.username, password: row.password },
-        failOnStatusCode: false,
-      });
+      // Success cases load the page with credentials so the rendered "Congratulations!"
+      // assertion has a real page to check. Failure cases don't navigate — the adapter
+      // exercises auth out-of-band via cy.request (see CypressTestAction.verifyAuthFailed
+      // for why a real navigation can't be used).
+      if (row.expectSuccess) {
+        cy.visit("/basic_auth", { auth: { username: row.username, password: row.password } });
+      }
       for (const step of testCase.steps) {
         cy.step(step.description);
         step.execute();

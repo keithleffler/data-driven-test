@@ -16,6 +16,8 @@ export interface ActionOptions {
   expectedUrl?: string;
   page?: Page
   url?: string;
+  username?: string;
+  password?: string;
 }
 
 export interface Action {

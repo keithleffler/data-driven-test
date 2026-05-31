@@ -19,7 +19,11 @@ export const basicAuthData: BasicAuthRow[] = [
 const buildBasicAuthTestCase = (po: BasicAuthPagePO, row: BasicAuthRow): TestCase =>
   new TestCase(
     `Basic Auth: ${row.description}`,
-    [row.expectSuccess ? po.verifyAuthenticatedStep() : po.verifyAuthFailedStep()],
+    [
+      row.expectSuccess
+        ? po.verifyAuthenticatedStep()
+        : po.verifyAuthFailedStep({ url: "/basic_auth", username: row.username, password: row.password }),
+    ],
     row.skip,
   );
 
