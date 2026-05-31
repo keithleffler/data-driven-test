@@ -12,5 +12,7 @@ export abstract class FrameworkAdapter {
   abstract verifyLinkHref: TestActionFn;
   abstract clickLink: TestActionFn;
   abstract verifyUrl: TestActionFn;
+  abstract verifyAuthenticated: TestActionFn;
+  abstract verifyAuthFailed: TestActionFn;
   abstract executeActions: TestActionFn;
 }

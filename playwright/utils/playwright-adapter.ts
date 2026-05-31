@@ -35,4 +35,12 @@ export class PlaywrightTestAction extends FrameworkAdapter {
     verifyUrl = async ({ expectedUrl, page }: { expectedUrl: string; page: Page }): PlaywrightReturnType => {
         await expect(page).toHaveURL((url) => url.pathname === expectedUrl);
     }
+
+    verifyAuthenticated = async ({ page }: { page: Page }): PlaywrightReturnType => {
+        await expect(page.getByText("Congratulations!")).toBeVisible();
+    }
+
+    verifyAuthFailed = async ({ page }: { page: Page; url?: string; username?: string; password?: string }): PlaywrightReturnType => {
+        await expect(page.locator("body")).toContainText("Not authorized");
+    }
 }

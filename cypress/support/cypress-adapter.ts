@@ -38,4 +38,23 @@ export class CypressTestAction extends FrameworkAdapter {
     verifyUrl = ({ expectedUrl }: { expectedUrl: string }): CypressReturnType => {
         return cy.location("pathname").should("eq", expectedUrl);
     }
+
+    verifyAuthenticated = (): CypressReturnType => {
+        return cy.contains("Congratulations").should("be.visible");
+    }
+
+    // Cypress can't reliably exercise the failure path through a real navigation:
+    // cy.visit's auth option triggers the browser's native auth dialog on 401 (hangs),
+    // and URL-embedded credentials are stripped by modern Chrome before the request is
+    // sent. The honest test for "bad credentials rejected" is an HTTP-level assertion.
+    verifyAuthFailed = ({ url, username, password }: { url: string; username: string; password: string }): CypressReturnType => {
+        return cy.request({
+            url,
+            auth: { username, password },
+            failOnStatusCode: false,
+        }).then((response) => {
+            expect(response.status).to.eq(401);
+            expect(response.body).to.contain("Not authorized");
+        });
+    }
 }
