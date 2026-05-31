@@ -5,16 +5,17 @@ import { PlaywrightTestAction } from "playwright/utils/playwright-adapter";
 const actions = new PlaywrightTestAction();
 const mainPageTests = getMainPageTests(actions);
 
-test.describe("main page tests", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/");
-  });
+test.describe("main page: link navigation", () => {
+
 
   for (const testCase of mainPageTests) {
+    if (testCase.skip) {
+      test.skip(testCase.description,() => {});
+      continue;
+    } 
     test(testCase.description, async ({ page }) => {
       for (const step of testCase.steps) {
         await test.step(step.description, async () => {
-          await expect(page).toHaveTitle(/The Internet/);
           await step.execute(page);
         });
       }

@@ -3,5 +3,6 @@ export class TestCase {
   constructor(
     public readonly description: string,
     public steps: TestStep[],
+    public skip = false
   ) {}
 }

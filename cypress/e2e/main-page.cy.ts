@@ -8,6 +8,10 @@ describe("main page tests", () => {
   });
 
   for (const testCase of getMainPageTests(actions)) {
+    if (testCase.skip) {
+      it.skip(testCase.description, () => {});
+      continue;
+    }
     it(testCase.description, () => {
       for (const step of testCase.steps) {
         cy.step(step.description);
