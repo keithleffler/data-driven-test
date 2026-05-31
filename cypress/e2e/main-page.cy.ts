@@ -4,7 +4,7 @@ const actions = new CypressTestAction();
 
 describe("main page tests", () => {
   beforeEach(() => {
-    cy.visit("https://the-internet.herokuapp.com/");
+    cy.visit("/");
   });
 
   for (const testCase of getMainPageTests(actions)) {
