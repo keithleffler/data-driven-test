@@ -38,4 +38,12 @@ export class CypressTestAction extends FrameworkAdapter {
     verifyUrl = ({ expectedUrl }: { expectedUrl: string }): CypressReturnType => {
         return cy.location("pathname").should("eq", expectedUrl);
     }
+
+    verifyAuthenticated = (): CypressReturnType => {
+        return cy.contains("Congratulations").should("be.visible");
+    }
+
+    verifyAuthFailed = (): CypressReturnType => {
+        return cy.get("body").should("contain.text", "Not authorized");
+    }
 }
