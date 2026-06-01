@@ -1,3 +1,4 @@
+import { Page } from "@playwright/test";
 
 export type CypressReturnType = Cypress.Chainable<any>;
 export type PlaywrightReturnType = Promise<void>;
@@ -9,7 +10,6 @@ export interface TestAction  {
   actionOptions?: ActionOptions;
 }
 
-import { Page } from "@playwright/test";
 
 export interface TestStepOptions {
   description: string;

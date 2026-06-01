@@ -1,12 +1,12 @@
 import { Page } from "@playwright/test";
-import { Action, TestActionFn, TestStepOptions } from "@lib/interfaces";
+import { TestAction, TestStepOptions } from "@lib/interfaces";
 
 
 
 
 export class TestStep {
   description: string;
-  protected actions: Action[];
+  protected actions: TestAction[];
 
   constructor({ description, actions }: TestStepOptions) {
     this.description = description;
