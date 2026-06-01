@@ -10,6 +10,9 @@ export class CypressTestAction extends FrameworkAdapter {
         }, cy.wrap(null));
     }
 
+    clickLink = ({ linkText }: { linkText: string }): CypressReturnType => {
+        return this.getLinkByText({ linkText }).click();
+    }
     // Internal helper, not part of the FrameworkAdapter contract — see playwright-adapter for why.
     // Uses an exact-text regex so "File Download" doesn't also match "Secure File Download".
     getLinkByText = ({ linkText }: { linkText: string }): CypressReturnType => {
@@ -19,26 +22,6 @@ export class CypressTestAction extends FrameworkAdapter {
     navigateToPage = ({ url }: { url: string }): CypressReturnType => {
         return cy.visit(url);
     }
-
-    // Filters with a predicate (rather than :contains) for two reasons:
-    // (1) cy.contains yields only the first match, making length assertions on it trivially true;
-    // (2) :contains is substring-only, which over-matches links like "Secure File Download".
-    verifyLinkExists = ({ linkText }: { linkText: string }): CypressReturnType => {
-        return cy.get("a").filter((_, el) => el.textContent?.trim() === linkText).should("have.length", 1);
-    }
-
-    verifyLinkHref = ({ linkText, expectedUrl }: { linkText: string; expectedUrl: string }): CypressReturnType => {
-        return this.getLinkByText({ linkText }).should("have.attr", "href", expectedUrl);
-    }
-
-    clickLink = ({ linkText }: { linkText: string }): CypressReturnType => {
-        return this.getLinkByText({ linkText }).click();
-    }
-
-    verifyUrl = ({ expectedUrl }: { expectedUrl: string }): CypressReturnType => {
-        return cy.location("pathname").should("eq", expectedUrl);
-    }
-
     verifyAuthenticated = (): CypressReturnType => {
         return cy.contains("Congratulations").should("be.visible");
     }
@@ -56,5 +39,20 @@ export class CypressTestAction extends FrameworkAdapter {
             expect(response.status).to.eq(401);
             expect(response.body).to.contain("Not authorized");
         });
+    }
+
+    // Filters with a predicate (rather than :contains) for two reasons:
+    // (1) cy.contains yields only the first match, making length assertions on it trivially true;
+    // (2) :contains is substring-only, which over-matches links like "Secure File Download".
+    verifyLinkExists = ({ linkText }: { linkText: string }): CypressReturnType => {
+        return cy.get("a").filter((_, el) => el.textContent?.trim() === linkText).should("have.length", 1);
+    }
+
+    verifyLinkHref = ({ linkText, expectedUrl }: { linkText: string; expectedUrl: string }): CypressReturnType => {
+        return this.getLinkByText({ linkText }).should("have.attr", "href", expectedUrl);
+    }
+
+    verifyUrl = ({ expectedUrl }: { expectedUrl: string }): CypressReturnType => {
+        return cy.location("pathname").should("eq", expectedUrl);
     }
 }

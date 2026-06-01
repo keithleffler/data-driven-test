@@ -10,6 +10,10 @@ export class PlaywrightTestAction extends FrameworkAdapter {
         }, Promise.resolve());
     }
 
+    clickLink = ({ linkText, page }: { linkText: string; page: Page }): PlaywrightReturnType => {
+        return this.getLinkByText({ linkText, page }).click();
+    }
+
     // Internal helper, not part of the FrameworkAdapter contract — Locator vs Cypress.Chainable
     // return types would leak framework specifics into the abstract base.
     getLinkByText = ({ linkText, page }: { linkText: string; page: Page }): Locator => {
@@ -17,23 +21,7 @@ export class PlaywrightTestAction extends FrameworkAdapter {
     }
 
     navigateToPage = ({ url, page }: { url: string; page: Page }): PlaywrightReturnType => {
-        return page.goto(url).then(() => {});
-    }
-
-    verifyLinkExists = async ({ linkText, page }: { linkText: string; page: Page }): PlaywrightReturnType => {
-        await expect(this.getLinkByText({ linkText, page })).toHaveCount(1);
-    }
-
-    verifyLinkHref = async ({ linkText, expectedUrl, page }: { linkText: string; expectedUrl: string; page: Page }): PlaywrightReturnType => {
-        await expect(this.getLinkByText({ linkText, page })).toHaveAttribute("href", expectedUrl);
-    }
-
-    clickLink = ({ linkText, page }: { linkText: string; page: Page }): PlaywrightReturnType => {
-        return this.getLinkByText({ linkText, page }).click();
-    }
-
-    verifyUrl = async ({ expectedUrl, page }: { expectedUrl: string; page: Page }): PlaywrightReturnType => {
-        await expect(page).toHaveURL((url) => url.pathname === expectedUrl);
+        return page.goto(url).then(() => { });
     }
 
     verifyAuthenticated = async ({ page }: { page: Page }): PlaywrightReturnType => {
@@ -42,5 +30,16 @@ export class PlaywrightTestAction extends FrameworkAdapter {
 
     verifyAuthFailed = async ({ page }: { page: Page; url?: string; username?: string; password?: string }): PlaywrightReturnType => {
         await expect(page.locator("body")).toContainText("Not authorized");
+    }
+    verifyLinkExists = async ({ linkText, page }: { linkText: string; page: Page }): PlaywrightReturnType => {
+        await expect(this.getLinkByText({ linkText, page })).toHaveCount(1);
+    }
+
+    verifyLinkHref = async ({ linkText, expectedUrl, page }: { linkText: string; expectedUrl: string; page: Page }): PlaywrightReturnType => {
+        await expect(this.getLinkByText({ linkText, page })).toHaveAttribute("href", expectedUrl);
+    }
+
+    verifyUrl = async ({ expectedUrl, page }: { expectedUrl: string; page: Page }): PlaywrightReturnType => {
+        await expect(page).toHaveURL((url) => url.pathname === expectedUrl);
     }
 }

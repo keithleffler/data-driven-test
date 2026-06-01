@@ -7,12 +7,13 @@ export type TestActionFn = (options?: any) => ActionReturnType;
 
 export abstract class FrameworkAdapter {
   
-  abstract navigateToPage: TestActionFn;
-  abstract verifyLinkExists: TestActionFn;
-  abstract verifyLinkHref: TestActionFn;
   abstract clickLink: TestActionFn;
-  abstract verifyUrl: TestActionFn;
+  abstract executeActions: TestActionFn;
+  abstract navigateToPage: TestActionFn;
+  
   abstract verifyAuthenticated: TestActionFn;
   abstract verifyAuthFailed: TestActionFn;
-  abstract executeActions: TestActionFn;
+  abstract verifyLinkExists: TestActionFn;
+  abstract verifyLinkHref: TestActionFn;
+  abstract verifyUrl: TestActionFn;
 }
