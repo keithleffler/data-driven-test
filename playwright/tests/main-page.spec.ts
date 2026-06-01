@@ -6,7 +6,9 @@ const actions = new PlaywrightTestAction();
 const mainPageTests = getMainPageTests(actions);
 
 test.describe("main page: link navigation", () => {
-
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/");
+  });
 
   for (const testCase of mainPageTests) {
     if (testCase.skip) {
