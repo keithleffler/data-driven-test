@@ -58,7 +58,6 @@ const linkNavData: LinkNavRow[] = [
 
 const buildLinkNavTestCase = (po: MainPagePO, row: LinkNavRow): TestCase =>
   new TestCase(`${row.linkText} Link Navigation Test`, [
-    po.navigateToPageStep({ url: "/" }),
     po.verifyLinkStep(row),
     po.verifyLinkNavigationStep(row),
   ], row.skip);
