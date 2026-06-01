@@ -1,9 +1,4 @@
-
-export type CypressReturnType = Cypress.Chainable<any>;
-export type PlaywrightReturnType = Promise<void>;
-
-export type ActionReturnType = CypressReturnType | PlaywrightReturnType;
-export type TestActionFn = (options?: any) => ActionReturnType;
+import { TestActionFn } from "./interfaces";
 
 export abstract class FrameworkAdapter {
   
