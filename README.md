@@ -6,6 +6,10 @@ A demonstration of data-driven test automation that runs the same test definitio
 
 This example is motivated by work at previous projects, where the organization was in the early stages of migrating from a very large number of Cucumber scenarios on Cypress to Playwright (non-Cucumber). Scenarios usually tested more than one thing. AI analysis revealed there were a small number of test equivalence classes, but a large input surface from variations of user type, product type, and state of residence.
 
+## Example domain
+
+This example uses [the-internet](https://the-internet.herokuapp.com/) as an example site.  The site cleanly separates web primatives, is cloneable from Github, and can be run locally as a Docker container.
+
 ## Objectives
 
 1. Abstract test types (text/context verification, link navigation, etc.) so a test definition reads as data, not framework code.
