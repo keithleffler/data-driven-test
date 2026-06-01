@@ -24,8 +24,3 @@ export interface ActionOptions {
   username?: string;
   password?: string;
 }
-
-export interface Action {
-  actionFn: TestActionFn;
-  actionOptions?: ActionOptions;
-}
