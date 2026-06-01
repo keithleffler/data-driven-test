@@ -1,5 +1,6 @@
 import { FrameworkAdapter } from "@lib/framework-adapter";
-import { TestAction, TestStep } from "@lib/index";
+import { TestStep } from "@lib/test-step";
+import { TestAction } from "@lib/interfaces";
 
 export class BasicAuthPagePO {
     constructor(protected adapter: FrameworkAdapter) {}

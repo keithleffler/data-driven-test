@@ -1,29 +1,9 @@
 import { Page } from "@playwright/test";
-import { TestActionFn } from "@lib/framework-adapter";
+import { Action, TestActionFn, TestStepOptions } from "@lib/interfaces";
 
 
-export type TestAction = {
-  actionFn: TestActionFn;
-  actionOptions?: ActionOptions;
-}
-export interface TestStepOptions {
-  description: string;
-  actions: TestAction[];
-}
 
-export interface ActionOptions {
-  linkText?: string;
-  expectedUrl?: string;
-  page?: Page
-  url?: string;
-  username?: string;
-  password?: string;
-}
 
-export interface Action {
-  actionFn: TestActionFn;
-  actionOptions?: ActionOptions;
-}
 export class TestStep {
   description: string;
   protected actions: Action[];
